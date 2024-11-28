@@ -12,7 +12,6 @@ import java.util.List;
 public class CartService {
 
     private final ProductRepository productRepository;
-    boolean isMember = true;
 
     public CartService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -30,17 +29,8 @@ public class CartService {
     public String deleteProductByName(String enteredName) {
         productRepository.deleteByName(enteredName);
         return "Product deleted. " + getCartItems();
-
-        /*for (Product product : getCartItems()) {
-            if (enteredName.equals(product.getName())) {
-                productRepository.delete(product);
-                return "Product with name " + enteredName + " has been deleted." + getCartItems();
-            }
-        }
-        return "Product with name " + enteredName + " not found." + getCartItems();*/
     }
 
-    //@Scheduled(fixedDelay = 10000)
     public double calculateCartTotal() {
         double cartTotal = 0;
         for (Product product : getCartItems()) {
@@ -62,12 +52,8 @@ public class CartService {
     }
 
     public String discountToCart() {
-
-        if (isMember == true) {
-            double discount = 0.10;
-            double applyDiscount = (calculateCartTotal() - (discount * calculateCartTotal()));
-            return "Discount applied. Discounted total is " + applyDiscount + ".";
-        }
-        return "Don't have membership";
+        double discount = 0.10;
+        double applyDiscount = (calculateCartTotal() - (discount * calculateCartTotal()));
+        return "Discount applied. Discounted total is " + applyDiscount + ".";
     }
 }
